@@ -28,4 +28,15 @@
   b. sonar's URL for 'SonarQube installations'
   c. Follow the desired timestamp for build artifacts.
   d. Slack's Workspace, notification channel and credential setting.
-  e. user credentials: 3 credentials are provisioned for this project: sonarqube, nexus and slack. 
+  e. user credentials: 3 credentials are provisioned for this project: sonarqube, nexus and slack.
+
+
+
+Jenkins pipeline samples:
+-rw-r--r-- 1 CICD-Student 197121 2997 Mar 31 09:40 pipeline.SonarqubeNexusSlack
+-rw-r--r-- 1 CICD-Student 197121  615 Mar 31 09:36 pipeline.buildUT
+-rw-r--r-- 1 CICD-Student 197121 1571 Mar 31 09:38 pipeline.codeSonaqubeAnalysis
+-rw-r--r-- 1 CICD-Student 197121 1945 Mar 31 09:38 pipeline.codeSonaqubeQualityGate
+above pipiline samples are verified with the topoloy outlined with project setup for Jenkins, Sonarqube, Nexus and Slack setup. 
+
+Either rename the pipeline.xx as Jenkinsfile or copy it to Jenkins UI for pipeline setup.
