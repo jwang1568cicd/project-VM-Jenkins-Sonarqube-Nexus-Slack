@@ -1,0 +1,217 @@
+This is specific for access jenkins with CLI.
+1. Once you have Jenkins installed and in operational state. Follow the Jenkins UI Dashboard -> Manager Jenkins -> Jenkins CLI to 
+1a: start with download jenkins-cli.jar, and run it as follows:
+java -jar jenkins-cli.jar -s http://172.16.11.5:8080/ help
+
+2. Jenkins CLI help:
+Available Commands 
+==================
+Name : Description
+add-job-to-view	Adds jobs to view.
+build	Builds a job, and optionally waits until its completion.
+cancel-quiet-down	Cancel the effect of the "quiet-down" command.
+clear-queue	Clears the build queue.
+connect-node	Reconnect to a node(s)
+console	Retrieves console output of a build.
+copy-job	Copies a job.
+create-credentials-by-xml	Create Credential by XML
+create-credentials-domain-by-xml	Create Credentials Domain by XML
+create-job	Creates a new job by reading stdin as a configuration XML file.
+create-node	Creates a new node by reading stdin as a XML configuration.
+create-view	Creates a new view by reading stdin as a XML configuration.
+declarative-linter	Validate a Jenkinsfile containing a Declarative Pipeline
+delete-builds	Deletes build record(s).
+delete-credentials	Delete a Credential
+delete-credentials-domain	Delete a Credentials Domain
+delete-job	Deletes job(s).
+delete-node	Deletes node(s)
+delete-view	Deletes view(s).
+disable-job	Disables a job.
+disable-plugin	Disable one or more installed plugins.
+disconnect-node	Disconnects from a node.
+enable-job	Enables a job.
+enable-plugin	Enables one or more installed plugins transitively.
+get-credentials-as-xml	Get a Credentials as XML (secrets redacted)
+get-credentials-domain-as-xml	Get a Credentials Domain as XML
+get-gradle	List available gradle installations
+get-job	Dumps the job definition XML to stdout.
+get-node	Dumps the node definition XML to stdout.
+get-view	Dumps the view definition XML to stdout.
+groovy	Executes the specified Groovy script.
+groovysh	Runs an interactive groovy shell.
+help	Lists all the available commands or a detailed description of single command.
+import-credentials-as-xml	Import credentials as XML. The output of "list-credentials-as-xml" can be used as input here as is, the only needed change is to set the actual Secrets which are redacted in the output.
+install-plugin	Installs a plugin either from a file, an URL, or from update center.
+keep-build	Mark the build to keep the build forever.
+list-changes	Dumps the changelog for the specified build(s).
+list-credentials	Lists the Credentials in a specific Store
+list-credentials-as-xml	Export credentials as XML. The output of this command can be used as input for "import-credentials-as-xml" as is, the only needed change is to set the actual Secrets which are redacted in the output.
+list-credentials-context-resolvers	List Credentials Context Resolvers
+list-credentials-providers	List Credentials Providers
+list-jobs	Lists all jobs in a specific view or item group.
+list-plugins	Outputs a list of installed plugins.
+mail	Reads stdin and sends that out as an e-mail.
+offline-node	Stop using a node for performing builds temporarily, until the next "online-node" command.
+online-node	Resume using a node for performing builds, to cancel out the earlier "offline-node" command.
+quiet-down	Quiet down Jenkins, in preparation for a restart. Don’t start any builds.
+reload-configuration	Discard all the loaded data in memory and reload everything from file system. Useful when you modified config files directly on disk.
+reload-job	Reload job(s)
+remove-job-from-view	Removes jobs from view.
+replay-pipeline	Replay a Pipeline build with edited script taken from standard input
+restart	Restart Jenkins.
+restart-from-stage	Restart a completed Declarative Pipeline build from a given stage.
+safe-restart	Safe Restart Jenkins. Don’t start any builds.
+safe-shutdown	Puts Jenkins into the quiet mode, wait for existing builds to be completed, and then shut down Jenkins.
+session-id	Outputs the session ID, which changes every time Jenkins restarts.
+set-build-description	Sets the description of a build.
+set-build-display-name	Sets the displayName of a build.
+shutdown	Immediately shuts down Jenkins server.
+stop-builds	Stop all running builds for job(s)
+trigger-downstream-pipelines	Triggers the downstream pipelines of the given Maven artifact based on their Maven dependencies
+update-credentials-by-xml	Update Credentials by XML
+update-credentials-domain-by-xml	Update Credentials Domain by XML
+update-job	Updates the job definition XML from stdin. The opposite of the get-job command.
+update-node	Updates the node definition XML from stdin. The opposite of the get-node command.
+update-view	Updates the view definition XML from stdin. The opposite of the get-view command.
+version	Outputs the current version.
+wait-node-offline	Wait for a node to become offline.
+wait-node-online	Wait for a node to become online.
+who-am-i	Reports your credential and permissions.
+
+
+
+3. Examples for accessing CLI for listing the jobs and specific job settings. 
+root@jenkins:~/scripts# java -jar jenkins-cli.jar -s http://172.16.11.5:8080  -auth admin:admin who-am-i
+Authenticated as: admin
+Authorities:
+  authenticated
+root@jenkins:~/scripts#
+root@jenkins:~/scripts#
+root@jenkins:~/scripts# java -jar jenkins-cli.jar -s http://172.16.11.5:8080  -auth admin:admin list-job
+No such command list-job
+root@jenkins:~/scripts# java -jar jenkins-cli.jar -s http://172.16.11.5:8080  -auth admin:admin list-jobs
+Assignment3CodeAnalysisSonarQube
+Assignment3CodeQualityGate
+Assignment3CodeUnitTest
+Assignment3pipeline2Nexus
+root@jenkins:~/scripts# java -jar jenkins-cli.jar -s http://172.16.11.5:8080  -auth admin:admin get-job Assignment3pipeline2Nexus
+<?xml version='1.1' encoding='UTF-8'?>
+<flow-definition plugin="workflow-job@1400.v7fd111b_ec82f">
+  <actions>
+    <org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobAction plugin="pipeline-model-definition@2.2184.v0b_358b_953e69"/>
+    <org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobPropertyTrackerAction plugin="pipeline-model-definition@2.2184.v0b_358b_953e69">
+      <jobProperties/>
+      <triggers/>
+      <parameters/>
+      <options/>
+    </org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobPropertyTrackerAction>
+  </actions>
+  <description>Assignment3 - Jenkins pipeline to store artifacts with Versioning in Nexus Repository.</description>
+  <keepDependencies>false</keepDependencies>
+  <properties/>
+  <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@3889.v937e0b_3412d3">
+    <script>def COLOR_MAP = [
+    &apos;SUCCESS&apos;: &apos;good&apos;,
+    &apos;FAILURE&apos;: &apos;danger&apos;,
+]
+pipeline {
+    agent any
+    tools {
+            maven &quot;MAVEN3&quot;
+            jdk &quot;JDK11&quot;
+        }
+    stages{
+        stage(&apos;Fetch code&apos;) {
+          steps{
+              git branch: &apos;main&apos;, url:&apos;https://github.com/onjerryaws/vprofile-project2.git&apos;
+          }
+        }
+
+        stage(&apos;Build&apos;) {
+            steps {
+                sh &apos;mvn clean install -DskipTests&apos;
+            }
+            post {
+                success {
+                    echo &quot;Now Archiving.&quot;
+                    archiveArtifacts artifacts: &apos;**/*.war&apos;
+                }
+            }
+        }
+        stage(&apos;Test&apos;){
+            steps {
+                sh &apos;mvn test&apos;
+            }
+
+        }
+
+        stage(&apos;Checkstyle Analysis&apos;){
+            steps {
+                sh &apos;mvn checkstyle:checkstyle&apos;
+            }
+        }
+
+        stage(&apos;Sonar Analysis&apos;) {
+            environment {
+                scannerHome = tool &apos;sonar4.7&apos;
+            }
+            steps {
+               withSonarQubeEnv(&apos;sonar&apos;) {
+                   sh &apos;&apos;&apos;${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=vprofile \
+                   -Dsonar.projectName=vprofile \
+                   -Dsonar.projectVersion=1.0 \
+                   -Dsonar.sources=src/ \
+                   -Dsonar.java.binaries=target/test-classes/com/visualpathit/account/controllerTest/ \
+                   -Dsonar.junit.reportsPath=target/surefire-reports/ \
+                   -Dsonar.jacoco.reportsPath=target/jacoco.exec \
+                   -Dsonar.java.checkstyle.reportPaths=target/checkstyle-result.xml&apos;&apos;&apos;
+              }
+            }
+        }
+
+        stage(&quot;Quality Gate&quot;) {
+            steps {
+                timeout(time: 1, unit: &apos;HOURS&apos;) {
+                    // Parameter indicates whether to set pipeline to UNSTABLE if Quality Gate fails
+                    // true = set pipeline to UNSTABLE, false = don&apos;t
+                    waitForQualityGate abortPipeline: true
+                }
+            }
+        }
+
+        stage(&quot;UploadArtifact&quot;){
+            steps{
+                nexusArtifactUploader(
+                  nexusVersion: &apos;nexus3&apos;,
+                  protocol: &apos;http&apos;,
+                  nexusUrl: &apos;172.16.11.2:8081&apos;,
+                  groupId: &apos;QA&apos;,
+                  version: &quot;${env.BUILD_ID}-${env.BUILD_TIMESTAMP}&quot;,
+                  repository: &apos;vprofile-repo&apos;,
+                  credentialsId: &apos;nexuslogin&apos;,
+                  artifacts: [
+                    [artifactId: &apos;vproapp&apos;,
+                     classifier: &apos;&apos;,
+                     file: &apos;target/vprofile-v2.war&apos;,
+                     type: &apos;war&apos;]
+    ]
+ )
+            }
+        }
+
+    }
+    post {
+        always {
+            echo &apos;Slack Notifications.&apos;
+            slackSend channel: &apos;#assignment3&apos;,
+                color: COLOR_MAP[currentBuild.currentResult],
+                message: &quot;*${currentBuild.currentResult}:* Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} \n More info at: ${env.BUILD_URL}&quot;
+        }
+    }
+}</script>
+    <sandbox>true</sandbox>
+  </definition>
+  <triggers/>
+  <disabled>false</disabled>
+root@jenkins:~/scripts#
+
