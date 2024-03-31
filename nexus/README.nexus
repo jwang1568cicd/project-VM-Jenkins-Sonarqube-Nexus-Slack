@@ -1,0 +1,7 @@
+1. The setup_nexus script is verified with Centos7 and Sonatype Nexus Repository OSS 3.66.0-02.
+2. Troubleshoot if the nexus.service is not up and running as expected based on the installation log before moving into steps 3 and afterward.
+
+3. Nexus is installed correctly and it's in operational state. 
+4. Here are few steps for basic provisioning:
+   a. Your initial admin user password is located in /opt/nexus/sonatype-work/nexus3/admin.password on the server. Follows the provisioning page to setup it up.
+   b. Create Reporsitory at Nexus side will base on the Jenkins' project pipeline defination for storing the desired artifacts.  

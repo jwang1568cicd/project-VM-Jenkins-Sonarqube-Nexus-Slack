@@ -1,0 +1,9 @@
+Setting up Slack notifications will require a slack account
+Navigate to Slack: https://slack.com/get-started
+
+1. Create an account and work space for notication channel.
+2. There is Jenkins CI instruction per your profile setting; make sure you copy the data correctly into Jenkins. Do not forget the # alone with the channel name.  
+3. Create a token and integrate it with Jenkins.
+4. If you are not clear about step 2 and 3, please google 'slack jenkins integration' and start from there before moving to Jenkins side.
+5. The screenshots directoy contains the screenshots with essential settings for interconnect among Jenkins and slack for notification channel.
+

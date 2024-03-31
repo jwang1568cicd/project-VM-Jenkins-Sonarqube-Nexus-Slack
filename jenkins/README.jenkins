@@ -1,0 +1,31 @@
+1. Based on the verfied steps with Ubuntu 20.4 and setup_jenkins.sh, it should bring up the Jenkins, 2.440.2, right after the script completion.
+2. Here are are few steps for issue troubleshooting.
+   a. Check the error indication from terminal output of setup_jenkins.sh
+   b. verify if the desired 'java -version' is used. JDK17, JDK11 and JDK8 are verified and shown in the scripts. 
+   c. Use date-java-alternatives command to switch between installed JDK versions. 
+   d. Use update-java-alternatives --list to list all installed JDK versions.
+   e. Verify the network connection to the EC2 by ping or curl CLI.
+3.Here are common plugins, tools and system related essential settings for the pipeline project which required mvn, JDK, SonarQube quality gate, Nexus repository and notification via slack.
+  Plugin section:
+  a. The following plugins will be needed for this project:
+     	Nexus Artifact Uploader
+	SonarQube Scanner
+	Git
+	Pipeline Maven Integration
+	Build Timestamp
+	Pipeline Utility Steps 
+        Slack Notification
+        Pipeline Stage View
+
+  Tools section: 
+  a. JDK17, JDK11 and JDK8 are verified and you need to have at least one provisioned for 'JDK installations'.
+  b. Git is required for 'Path to Git executable'
+  c. sonar4.7 is provisioned for 'SonarQube Scanner installations'  
+  d. MAVEN3 is provisioned for 'Maven installations'
+  
+  Systems section:
+  a. Jenkins' URL
+  b. sonar's URL for 'SonarQube installations'
+  c. Follow the desired timestamp for build artifacts.
+  d. Slack's Workspace, notification channel and credential setting.
+  e. user credentials: 3 credentials are provisioned for this project: sonarqube, nexus and slack. 

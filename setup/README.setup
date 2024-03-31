@@ -1,0 +1,10 @@
+1. Bring up the VM and gain the terminal access via ssh.
+2. Use vagrant built-in file transfer or execte the Jenkins shell script within the terminal.
+3. The 'systemctl status jenkins' will show the service status. Make sure jenkins is in 'active' state or troubleshoot before proceeding with next step.
+4. Repeate step 2 and 3 for both SonarQube and Nexus service
+5. Setting up Slack notification channel by following the link: https://slack.com/get-started
+   5.1 Create an account and channel for Jenkins pipeline notification.
+   5.2 Create a token and integrate it with Jenkins.
+   5.3 If needed, follow detail instructions in slack directory.
+6. The screenshots directoy contains the screenshots with AWS EC2 essential settings for interconnect among Jenkins, SonarQube and Nexus servers.
+7. There is a allhost.sh for using checking the network connectivity among jenkins, sonarqube and nexus servers.
